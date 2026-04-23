@@ -4,259 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Should YOU do Co-op?</title>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #f5f0e8;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
-  }
-
-  .quiz-wrap {
-    background: #fffdf7;
-    border: 1.5px solid #d4c9b0;
-    border-radius: 20px;
-    max-width: 640px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .quiz-header {
-    background: #5a7a4a;
-    padding: 2rem 2.5rem;
-    text-align: center;
-  }
-
-  .quiz-header .eyebrow {
-    font-size: 11px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: #b8d4a8;
-    margin-bottom: .6rem;
-  }
-
-  .quiz-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: #fff;
-    line-height: 1.2;
-  }
-
-  .quiz-header p {
-    font-size: 13px;
-    color: #c8e0b8;
-    margin-top: .5rem;
-  }
-
-  .progress-bar-wrap {
-    background: #e8e0d0;
-    height: 6px;
-  }
-
-  .progress-bar {
-    height: 6px;
-    background: #5a7a4a;
-    transition: width 0.4s ease;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .quiz-body {
-    padding: 2rem 2.5rem;
-  }
-
-  .question-count {
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: #9a8a6a;
-    margin-bottom: .8rem;
-  }
-
-  .question-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    color: #1a1a1a;
-    line-height: 1.45;
-    margin-bottom: 1.5rem;
-  }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .option-btn {
-    background: #f5f0e8;
-    border: 1.5px solid #d4c9b0;
-    border-radius: 12px;
-    padding: 14px 18px;
-    text-align: left;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: #2a2a2a;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .option-btn:hover {
-    background: #eaf4ee;
-    border-color: #5a7a4a;
-    color: #3a5a2a;
-  }
-
-  .option-btn.selected {
-    background: #eaf4ee;
-    border-color: #5a7a4a;
-    color: #3a5a2a;
-    font-weight: 500;
-  }
-
-  .option-letter {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #d4c9b0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 500;
-    flex-shrink: 0;
-    color: #5a4a2a;
-    transition: all 0.2s;
-  }
-
-  .option-btn.selected .option-letter {
-    background: #5a7a4a;
-    color: white;
-  }
-
-  .next-btn {
-    margin-top: 1.5rem;
-    background: #5a7a4a;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 14px 32px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.2s;
-    display: none;
-  }
-
-  .next-btn:hover { background: #4a6a3a; }
-  .next-btn.visible { display: block; }
-
-  /* Result screen */
-  .result-screen { display: none; padding: 2rem 2.5rem; }
-  .result-screen.visible { display: block; }
-  .question-screen.hidden { display: none; }
-
-  .result-badge {
-    display: inline-block;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  .badge-coop { background: #eaf4ee; color: #3a5a2a; border: 1px solid #b8d4a8; }
-  .badge-fswep { background: #fff3e0; color: #7a4a1a; border: 1px solid #f0c88a; }
-  .badge-self { background: #e8eaf4; color: #2a3a6a; border: 1px solid #a8b4d4; }
-
-  .result-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: #1a1a1a;
-    margin-bottom: .8rem;
-    line-height: 1.3;
-  }
-
-  .result-desc {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .result-tips {
-    background: #f5f0e8;
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .result-tips h3 {
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: #7a6a4a;
-    margin-bottom: .8rem;
-    font-weight: 500;
-  }
-
-  .result-tips ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .result-tips li {
-    font-size: 13px;
-    color: #3a3a2a;
-    padding-left: 1.2rem;
-    position: relative;
-    line-height: 1.5;
-  }
-
-  .result-tips li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: #5a7a4a;
-  }
-
-  .retake-btn {
-    background: transparent;
-    border: 1.5px solid #5a7a4a;
-    color: #5a7a4a;
-    border-radius: 12px;
-    padding: 12px 32px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.2s;
-  }
-
-  .retake-btn:hover { background: #eaf4ee; }
-
-  .quiz-footer {
-    padding: 1rem 2.5rem;
-    border-top: 1px solid #e8e0d0;
-    text-align: center;
-    font-size: 11px;
-    color: #9a8a6a;
-  }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#f5f0e4;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;}
+.quiz-wrap{background:#fffdf5;border:3px solid #1c1c1c;border-radius:12px;max-width:640px;width:100%;overflow:hidden;box-shadow:6px 6px 0 #1c1c1c;}
+.quiz-header{background:#798b23;padding:2rem 2.5rem;text-align:center;border-bottom:3px solid #1c1c1c;}
+.quiz-header .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#f5f0e4;margin-bottom:.6rem;font-weight:500;opacity:.8;}
+.quiz-header h1{font-family:'Amaranth',sans-serif;font-size:1.8rem;color:#f5f0e4;line-height:1.2;font-weight:700;}
+.quiz-header p{font-size:13px;color:#f5f0e4;margin-top:.5rem;opacity:.8;}
+.progress-bar-wrap{background:#2f3c1c;height:6px;}
+.progress-bar{height:6px;background:#bfd3d6;transition:width 0.4s ease;}
+.quiz-body{padding:2rem 2.5rem;}
+.question-count{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#798b23;margin-bottom:.8rem;font-weight:500;}
+.question-text{font-family:'Amaranth',sans-serif;font-size:1.2rem;color:#1c1c1c;line-height:1.45;margin-bottom:1.5rem;font-weight:700;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.option-btn{background:#fffdf5;border:2.5px solid #1c1c1c;border-radius:8px;padding:14px 18px;text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:#1c1c1c;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:12px;box-shadow:3px 3px 0 #1c1c1c;}
+.option-btn:hover{background:#f0f4e0;border-color:#798b23;box-shadow:3px 3px 0 #798b23;}
+.option-btn.selected{background:#f0f4e0;border-color:#798b23;box-shadow:3px 3px 0 #798b23;}
+.option-letter{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Amaranth',sans-serif;transition:all 0.15s;}
+.letter-a{background:#798b23;color:#f5f0e4;}
+.letter-b{background:#bfd3d6;color:#1d2544;}
+.letter-c{background:#1d2544;color:#dfeaec;}
+.option-btn.selected .option-letter{border:2px solid #1c1c1c;}
+.next-btn{margin-top:1.5rem;background:#2f3c1c;color:#f5f0e4;border:2.5px solid #1c1c1c;border-radius:8px;padding:14px 32px;font-family:'Amaranth',sans-serif;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.15s;display:none;box-shadow:3px 3px 0 #1c1c1c;letter-spacing:.04em;}
+.next-btn:hover{background:#1c1c1c;box-shadow:1px 1px 0 #1c1c1c;transform:translate(2px,2px);}
+.next-btn.visible{display:block;}
+.result-screen{display:none;padding:2rem 2.5rem;}
+.result-screen.visible{display:block;}
+.question-screen.hidden{display:none;}
+.result-badge{display:inline-block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:1rem;font-weight:500;border:2px solid #1c1c1c;box-shadow:2px 2px 0 #1c1c1c;}
+.badge-coop{background:#798b23;color:#f5f0e4;}
+.badge-fswep{background:#bfd3d6;color:#1d2544;}
+.badge-self{background:#1d2544;color:#dfeaec;}
+.result-title{font-family:'Amaranth',sans-serif;font-size:1.5rem;color:#1c1c1c;margin-bottom:.8rem;line-height:1.3;font-weight:700;}
+.result-desc{font-size:13px;color:#2f3c1c;line-height:1.8;margin-bottom:1.5rem;}
+.result-tips{background:#f5f0e4;border:2.5px solid #1c1c1c;border-radius:8px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;box-shadow:3px 3px 0 #1c1c1c;}
+.result-tips h3{font-family:'Amaranth',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#798b23;margin-bottom:.8rem;font-weight:700;}
+.result-tips ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.result-tips li{font-size:12px;color:#1c1c1c;padding-left:1.2rem;position:relative;line-height:1.6;}
+.result-tips li::before{content:'→';position:absolute;left:0;color:#798b23;font-weight:700;}
+.retake-btn{background:transparent;border:2.5px solid #1c1c1c;color:#1c1c1c;border-radius:8px;padding:12px 32px;font-family:'Amaranth',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;transition:all 0.15s;box-shadow:3px 3px 0 #1c1c1c;}
+.retake-btn:hover{background:#f0f4e0;box-shadow:1px 1px 0 #1c1c1c;transform:translate(2px,2px);}
+.quiz-footer{padding:1rem 2.5rem;border-top:3px dashed #2f3c1c;text-align:center;font-size:11px;color:#798b23;font-weight:500;background:#f5f0e4;}
 </style>
 </head>
 <body>
@@ -266,11 +56,9 @@
     <h1>Should YOU do Co-op?</h1>
     <p>6 questions · Based on real student experiences</p>
   </div>
-
   <div class="progress-bar-wrap">
-    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
   </div>
-
   <div class="quiz-body">
     <div class="question-screen" id="questionScreen">
       <p class="question-count" id="questionCount">Question 1 of 6</p>
@@ -278,7 +66,6 @@
       <div class="options" id="optionsContainer"></div>
       <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
     </div>
-
     <div class="result-screen" id="resultScreen">
       <span class="result-badge" id="resultBadge"></span>
       <h2 class="result-title" id="resultTitle"></h2>
@@ -290,182 +77,51 @@
       <button class="retake-btn" onclick="retakeQuiz()">← Retake the quiz</button>
     </div>
   </div>
-
-  <div class="quiz-footer">
-    Inspired by the experiences of Ianna, Karina & Dina · Make Noise Mindfully
-  </div>
+  <div class="quiz-footer">Inspired by the experiences of Ianna, Karina and Dina · Make Noise Mindfully</div>
 </div>
-
 <script>
-const questions = [
-  {
-    text: "How would you describe your current financial situation as a student?",
-    options: [
-      { label: "I'm managing okay — I can afford extra fees if they're worth it", points: { coop: 2, fswep: 1, self: 0 } },
-      { label: "It's tight — every dollar counts and I can't justify $500+ fees", points: { coop: 0, fswep: 2, self: 1 } },
-      { label: "I'm self-funding my degree and have zero room for extra costs", points: { coop: 0, fswep: 1, self: 2 } }
-    ]
-  },
-  {
-    text: "What matters most to you in a work experience program?",
-    options: [
-      { label: "Structured support — I want guidance, resources, and a process", points: { coop: 2, fswep: 1, self: 0 } },
-      { label: "Real government or institutional experience on my resume", points: { coop: 0, fswep: 2, self: 1 } },
-      { label: "Full independence — I'd rather find my own path and apply directly", points: { coop: 0, fswep: 0, self: 2 } }
-    ]
-  },
-  {
-    text: "How do you feel about your university being involved in evaluating your workplace performance?",
-    options: [
-      { label: "Fine with it — accountability helps me stay on track", points: { coop: 2, fswep: 0, self: 0 } },
-      { label: "Uncomfortable — feels like an unnecessary middleman", points: { coop: 0, fswep: 2, self: 1 } },
-      { label: "Hard no — my job performance is between me and my employer", points: { coop: 0, fswep: 1, self: 2 } }
-    ]
-  },
-  {
-    text: "You're ready to apply for jobs. How many applications are you willing to send?",
-    options: [
-      { label: "I'd rather apply to a curated list through a program portal", points: { coop: 2, fswep: 1, self: 0 } },
-      { label: "I'll apply broadly — even 50+ if that's what it takes", points: { coop: 1, fswep: 1, self: 2 } },
-      { label: "I'll cold email, network, and go beyond job boards entirely", points: { coop: 0, fswep: 0, self: 2 } }
-    ]
-  },
-  {
-    text: "What's your program or career direction?",
-    options: [
-      { label: "Tech, business or sciences — co-op is very standard in my field", points: { coop: 2, fswep: 0, self: 1 } },
-      { label: "I'm open to government or public sector work", points: { coop: 0, fswep: 2, self: 0 } },
-      { label: "Creative, media or arts — I need real portfolio work, not a course", points: { coop: 0, fswep: 0, self: 2 } }
-    ]
-  },
-  {
-    text: "Be honest — how would you describe your approach to career planning?",
-    options: [
-      { label: "I want a proven system to follow — I'm not great at self-directing", points: { coop: 2, fswep: 1, self: 0 } },
-      { label: "I'm motivated but want some institutional backing behind me", points: { coop: 1, fswep: 2, self: 0 } },
-      { label: "I'm a self-starter — LinkedIn, networking, cold outreach, I'm on it", points: { coop: 0, fswep: 0, self: 2 } }
-    ]
-  }
-];
-
-const results = {
-  coop: {
-    badge: "Recommendation: Co-op",
-    badgeClass: "badge-coop",
-    title: "Co-op could genuinely work for you.",
-    desc: "Based on your answers, you value structure, institutional support, and a guided process — and that's exactly what Co-op is designed to provide. The fees may be worth it for your situation, especially if your program has strong employer connections. Just go in with realistic expectations: the resources are often standardized, so supplement with your own job search too.",
-    tips: [
-      "Research your specific program's Co-op placement rates before committing",
-      "Ask current students — not the Co-op office — for honest feedback",
-      "Apply to postings outside MySuccess too (LinkedIn, Indeed, company sites)",
-      "Know that 70+ applications may still be needed — Dina applied to that many"
-    ]
-  },
-  fswep: {
-    badge: "Recommendation: FSWEP",
-    badgeClass: "badge-fswep",
-    title: "FSWEP might be your best move.",
-    desc: "The Federal Student Work Experience Program gave both Ianna and Karina their best opportunities — without the $500 fees. If you're open to government work, it's worth prioritizing over Co-op. Your resume stays in their system too, meaning future opportunities can come to you. Note: federal hiring has slowed in 2026, so apply early and to multiple departments.",
-    tips: [
-      "Apply at jobs.gc.ca — search 'Federal Student Work Experience'",
-      "Apply to multiple departments to maximize your chances",
-      "Your profile stays on file — past applicants like Karina got rehired this way",
-      "Combine with self-directed applications to hedge your bets"
-    ]
-  },
-  self: {
-    badge: "Recommendation: Self-directed",
-    badgeClass: "badge-self",
-    title: "You don't need Co-op — go your own way.",
-    desc: "You're independent, resourceful, and unwilling to pay for resources you could find yourself. That's a strength. Both Maxine and Ianna dropped Co-op once they landed their own jobs — and they're not alone. The job market rewards people who reach out directly, build real networks, and don't wait for a program to open the door for them.",
-    tips: [
-      "Cold email people in roles you want — even a 5% response rate adds up",
-      "Build your portfolio or GitHub before applying — show don't tell",
-      "LinkedIn connections and informational interviews go further than portals",
-      "Look into FSWEP as a backup — it's free and worth a parallel application"
-    ]
-  }
-};
-
-let current = 0;
-let scores = { coop: 0, fswep: 0, self: 0 };
-let selectedOption = null;
-
-function loadQuestion() {
-  const q = questions[current];
-  document.getElementById('questionCount').textContent = `Question ${current + 1} of ${questions.length}`;
-  document.getElementById('questionText').textContent = q.text;
-  document.getElementById('progressBar').style.width = `${(current / questions.length) * 100}%`;
-
-  const container = document.getElementById('optionsContainer');
-  container.innerHTML = '';
-  selectedOption = null;
+const questions=[{text:"How would you describe your financial situation as a student?",options:[{label:"Managing okay, extra fees are worth it if they help",points:{coop:2,fswep:1,self:0}},{label:"Tight, can't justify $500+ fees no matter what",points:{coop:0,fswep:2,self:1}},{label:"Self-funding with zero room for any extra costs",points:{coop:0,fswep:1,self:2}}]},{text:"What matters most to you in a work experience program?",options:[{label:"Structured support and a guided process",points:{coop:2,fswep:1,self:0}},{label:"Real government or institutional experience",points:{coop:0,fswep:2,self:1}},{label:"Full independence to find my own path",points:{coop:0,fswep:0,self:2}}]},{text:"How do you feel about your university evaluating your workplace performance?",options:[{label:"Fine with it, accountability helps me stay on track",points:{coop:2,fswep:0,self:0}},{label:"Uncomfortable, it feels like an unnecessary middleman",points:{coop:0,fswep:2,self:1}},{label:"Hard no, it's between me and my employer only",points:{coop:0,fswep:1,self:2}}]},{text:"How many job applications are you willing to send?",options:[{label:"I'd rather apply through a curated program portal",points:{coop:2,fswep:1,self:0}},{label:"I'll apply broadly, even 50+ if needed",points:{coop:1,fswep:1,self:2}},{label:"Cold email and network beyond job boards entirely",points:{coop:0,fswep:0,self:2}}]},{text:"What's your program or career direction?",options:[{label:"Tech or business, co-op is standard in my field",points:{coop:2,fswep:0,self:1}},{label:"Open to government or public sector work",points:{coop:0,fswep:2,self:0}},{label:"Creative or media, I need real portfolio work",points:{coop:0,fswep:0,self:2}}]},{text:"How would you describe your approach to career planning?",options:[{label:"I want a proven system, not great at self-directing",points:{coop:2,fswep:1,self:0}},{label:"Motivated but want some institutional backing",points:{coop:1,fswep:2,self:0}},{label:"Self-starter, LinkedIn, networking and cold outreach",points:{coop:0,fswep:0,self:2}}]}];
+const results={coop:{badge:"Recommendation: Co-op",badgeClass:"badge-coop",title:"Co-op could genuinely work for you.",desc:"You value structure and institutional support, which is exactly what Co-op is designed to provide. The fees may be worth it if your program has strong employer connections. Go in with realistic expectations and supplement with your own job search too.",tips:["Research your program's Co-op placement rates before committing","Ask current students, not the Co-op office, for honest feedback","Apply to postings outside MySuccess too (LinkedIn, Indeed, company sites)","Know that 70+ applications may still be needed, Dina applied to that many"]},fswep:{badge:"Recommendation: FSWEP",badgeClass:"badge-fswep",title:"FSWEP might be your best move.",desc:"The Federal Student Work Experience Program gave both Ianna and Karina their best opportunities with no $500 fees. If you're open to government work, it's worth prioritizing over Co-op. Your resume stays in their system for future opportunities too.",tips:["Apply at jobs.gc.ca and search Federal Student Work Experience","Apply to multiple departments to maximize your chances","Your profile stays on file, past applicants like Karina got rehired this way","Combine with self-directed applications to hedge your bets"]},self:{badge:"Recommendation: Self-directed",badgeClass:"badge-self",title:"You don't need Co-op, go your own way.",desc:"You're independent and resourceful. Both Maxine and Ianna dropped Co-op once they landed their own jobs. The job market rewards people who reach out directly and don't wait for a program to open the door.",tips:["Cold email people in roles you want, even a 5% response rate adds up","Build your portfolio before applying, show don't tell","LinkedIn connections and informational interviews go further than portals","Look into FSWEP as a backup, it's free and worth a parallel application"]}};
+let current=0,scores={coop:0,fswep:0,self:0},selectedOption=null;
+const letters=['A','B','C'];
+const letterClasses=['letter-a','letter-b','letter-c'];
+function loadQuestion(){
+  const q=questions[current];
+  document.getElementById('questionCount').textContent=`Question ${current+1} of ${questions.length}`;
+  document.getElementById('questionText').textContent=q.text;
+  document.getElementById('progressBar').style.width=`${(current/questions.length)*100}%`;
+  const container=document.getElementById('optionsContainer');
+  container.innerHTML='';selectedOption=null;
   document.getElementById('nextBtn').classList.remove('visible');
-
-  const letters = ['A', 'B', 'C'];
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.innerHTML = `<span class="option-letter">${letters[i]}</span>${opt.label}`;
-    btn.onclick = () => selectOption(btn, i);
+  q.options.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='option-btn';
+    btn.innerHTML=`<span class="option-letter ${letterClasses[i]}">${letters[i]}</span>${opt.label}`;
+    btn.onclick=()=>{document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedOption=i;document.getElementById('nextBtn').classList.add('visible');};
     container.appendChild(btn);
   });
 }
-
-function selectOption(btn, index) {
-  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedOption = index;
-  document.getElementById('nextBtn').classList.add('visible');
-}
-
-function nextQuestion() {
-  if (selectedOption === null) return;
-  const pts = questions[current].options[selectedOption].points;
-  scores.coop += pts.coop;
-  scores.fswep += pts.fswep;
-  scores.self += pts.self;
-
+function nextQuestion(){
+  if(selectedOption===null)return;
+  const pts=questions[current].options[selectedOption].points;
+  scores.coop+=pts.coop;scores.fswep+=pts.fswep;scores.self+=pts.self;
   current++;
-  if (current < questions.length) {
-    loadQuestion();
-  } else {
-    showResult();
+  if(current<questions.length){loadQuestion();}
+  else{
+    document.getElementById('progressBar').style.width='100%';
+    document.getElementById('questionScreen').classList.add('hidden');
+    const top=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+    const r=results[top];
+    document.getElementById('resultBadge').textContent=r.badge;
+    document.getElementById('resultBadge').className=`result-badge ${r.badgeClass}`;
+    document.getElementById('resultTitle').textContent=r.title;
+    document.getElementById('resultDesc').textContent=r.desc;
+    const tl=document.getElementById('resultTips');tl.innerHTML='';
+    r.tips.forEach(t=>{const li=document.createElement('li');li.textContent=t;tl.appendChild(li);});
+    document.getElementById('resultScreen').classList.add('visible');
   }
 }
-
-function showResult() {
-  document.getElementById('progressBar').style.width = '100%';
-  document.getElementById('questionScreen').classList.add('hidden');
-
-  const top = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-  const r = results[top];
-
-  document.getElementById('resultBadge').textContent = r.badge;
-  document.getElementById('resultBadge').className = `result-badge ${r.badgeClass}`;
-  document.getElementById('resultTitle').textContent = r.title;
-  document.getElementById('resultDesc').textContent = r.desc;
-
-  const tipsList = document.getElementById('resultTips');
-  tipsList.innerHTML = '';
-  r.tips.forEach(tip => {
-    const li = document.createElement('li');
-    li.textContent = tip;
-    tipsList.appendChild(li);
-  });
-
-  document.getElementById('resultScreen').classList.add('visible');
-}
-
-function retakeQuiz() {
-  current = 0;
-  scores = { coop: 0, fswep: 0, self: 0 };
-  selectedOption = null;
-  document.getElementById('questionScreen').classList.remove('hidden');
-  document.getElementById('resultScreen').classList.remove('visible');
-  loadQuestion();
-}
-
+function retakeQuiz(){current=0;scores={coop:0,fswep:0,self:0};selectedOption=null;document.getElementById('questionScreen').classList.remove('hidden');document.getElementById('resultScreen').classList.remove('visible');loadQuestion();}
 loadQuestion();
 </script>
 </body>
